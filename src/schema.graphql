@@ -1,3 +1,81 @@
+type Chat {
+  id: Int!
+  messages: [Message]
+  participants: [User]
+  createdAt: String!
+  updatedAt: String
+}
+
+type Message {
+  id: Int!
+  text: String!
+  chat: Chat!
+  user: User!
+  createdAt: String!
+  updatedAt: String
+}
+
+type Place {
+  id: Int!
+  name: String!
+  lat: Float!
+  lng: Float!
+  address: String!
+  isFav: Boolean!
+  createdAt: String!
+  updatedAt: String
+}
+
+type Ride {
+  id: Int!
+  status: String!
+  pickUpAddress: String!
+  pickUpLat: Float!
+  pickUpLng: Float!
+  dropOffAddress: String!
+  dropOffLat: Float!
+  dropOffLng: Float!
+  price: Float!
+  duration: String!
+  distance: String!
+  createdAt: String!
+  updatedAt: String
+  driver: User!
+  passenger: User!
+}
+
+type CompletePhoneVerificationResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type Mutation {
+  CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!
+  EmailSignIn(email: String!, password: String!): EmailSignInResponse!
+  EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, age: Int!, phoneNumber: String!): EmailSignUpResponse!
+  FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FaceBookConnectResponse!
+  StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
+}
+
+type EmailSignInResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type EmailSignUpResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type FaceBookConnectResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
 type User {
   id: Int!
   email: String
@@ -18,18 +96,28 @@ type User {
   lastLng: Float
   lasLat: Float
   lastOrientation: Float
+  chat: Chat
+  messages: [Message]
+  ridesAsPassenger: [Ride]
+  ridesAsDriver: [Ride]
+  fbId: String
 }
 
 type Query {
   user: User
 }
 
-type Verificaiton {
+type StartPhoneVerificationResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Verification {
   id: Int!
   target: String!
   payload: String!
   key: String!
-  used: Boolean!
   createdAt: String!
-  updatedAt: String!
+  updatedAt: String
+  verified: Boolean!
 }

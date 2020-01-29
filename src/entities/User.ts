@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import {
   Entity,
   BaseEntity,
@@ -7,9 +8,14 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { IsEmail } from 'class-validator';
+import Chat from './Chat';
+import Message from './Message';
+import Ride from './Ride';
 
 @Entity()
 class User extends BaseEntity {
@@ -18,9 +24,9 @@ class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'text', unique: true })
+  @Column({ type: 'text', nullable: true })
   @IsEmail()
-  email: string;
+  email: string | null;
 
   @Column({ type: 'boolean', default: false })
   verifiedEmail: boolean;
@@ -31,7 +37,7 @@ class User extends BaseEntity {
   @Column({ type: 'text' })
   lastName: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   age: number;
 
   @Column({ type: 'text' })
@@ -45,6 +51,9 @@ class User extends BaseEntity {
 
   @Column({ type: 'text' })
   profilePhoto: string;
+
+  @Column({ type: 'text', nullable: true })
+  fbId: string;
 
   @CreateDateColumn()
   createdAt: string;
@@ -69,6 +78,30 @@ class User extends BaseEntity {
 
   @Column({ type: 'double precision', default: 0 })
   lastOrientation: number;
+
+  @ManyToOne(
+    (type) => Chat,
+    (chat) => chat.participants,
+  )
+  chat: Chat;
+
+  @OneToMany(
+    (type) => Message,
+    (message) => message.user,
+  )
+  messages: Message[];
+
+  @OneToMany(
+    (type) => Ride,
+    (ride) => ride.passenger,
+  )
+  ridesAsPassenger: Ride[];
+
+  @OneToMany(
+    (type) => Ride,
+    (ride) => ride.driver,
+  )
+  ridesAsDriver: Ride[];
 
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;

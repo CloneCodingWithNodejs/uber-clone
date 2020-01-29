@@ -40,6 +40,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "@types/twilio": "^2.11.0",
     "babel-runtime": "^6.26.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.11.0",
@@ -53,6 +54,7 @@
     "morgan": "^1.9.1",
     "pg": "^7.17.1",
     "tslint-config-prettier": "^1.18.0",
+    "twilio": "^3.39.3",
     "typeorm": "^0.2.22"
   }
 }
