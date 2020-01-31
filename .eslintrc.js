@@ -2,20 +2,20 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    node: true,
+    node: true
   },
   extends: ['plugin:react/recommended', 'airbnb'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    SharedArrayBuffer: 'readonly'
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
@@ -23,12 +23,15 @@ module.exports = {
     'import/extensions': 0,
     'no-unused-vars': 0,
     'import/no-unresolved': 0,
+    'arrow-body-style': 0,
+    'comma-dangle': 0,
+    'prefer-destructuring': 0
   },
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
-  },
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
+    }
+  }
 };

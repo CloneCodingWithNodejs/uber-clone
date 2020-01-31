@@ -4,6 +4,7 @@ import {
 } from '../../../types/graph';
 import { Resolvers } from '../../../types/resolvers';
 import User from '../../../entities/User';
+import createJWT from '../../../utils/createJWT';
 // 이메일로 로그인
 const resolvers: Resolvers = {
   Mutation: {
@@ -21,17 +22,19 @@ const resolvers: Resolvers = {
             token: null,
           };
         }
+        // 비밀번호가 일치하는지 확인함
         const checkPassword = await user.comparePassword(password);
         if (checkPassword) {
+          const token = createJWT(user.id);
           return {
             ok: true,
             error: null,
-            token: 'comming Soon ',
+            token,
           };
         }
         return {
           ok: false,
-          error: 'Wrong password',
+          error: '패스워드가 틀렸습니다',
           token: null,
         };
       } catch (error) {
