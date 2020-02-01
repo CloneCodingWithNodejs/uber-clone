@@ -5,6 +5,7 @@ import {
   UpdateMyProfileResponse
 } from '../../../types/graph';
 import User from '../../../entities/User';
+import cleanNull from '../../../utils/cleanNullArgs';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -14,15 +15,10 @@ const resolvers: Resolvers = {
         args: UpdateMyProfileMutationArgs,
         context
       ): Promise<UpdateMyProfileResponse> => {
-        const user: User = context.user;
+        const user: User = context.req.user;
 
         // 빈값이 업데이트 되면 안되니까 빈값은 걸러냄
-        const notNull: any = {};
-        Object.keys(args).forEach((key) => {
-          if (args[key] !== null) {
-            notNull[key] = args[key];
-          }
-        });
+        const notNull: any = cleanNull(args);
         try {
           if (notNull.password !== null) {
             user.password = notNull.password;

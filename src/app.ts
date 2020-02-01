@@ -1,4 +1,4 @@
-import { GraphQLServer } from 'graphql-yoga';
+import { GraphQLServer, PubSub } from 'graphql-yoga';
 import { ContextParameters } from 'graphql-yoga/dist/types';
 import cors from 'cors';
 import logger from 'morgan';
@@ -9,12 +9,21 @@ import decodeJWT from './utils/decodeJWT';
 class App {
   public app: GraphQLServer;
 
+  public pubSub: any;
+
   constructor() {
+    this.pubSub = new PubSub();
+    this.pubSub.ee.setMaxListeners(99);
     this.app = new GraphQLServer({
       schema,
       context: (req: ContextParameters) => {
-        return req.request;
-      },
+        const { connection: { context = null } = {} } = req;
+        return {
+          req: req.request,
+          pubSub: this.pubSub,
+          context
+        };
+      }
     });
     this.middlewares();
   }

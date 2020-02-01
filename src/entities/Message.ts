@@ -5,7 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  ManyToOne
 } from 'typeorm';
 
 import Chat from './Chat';
@@ -21,13 +21,13 @@ class Message extends BaseEntity {
 
   @ManyToOne(
     (type) => Chat,
-    (chat) => chat.messages,
+    (chat) => chat.messages
   )
   chat: Chat;
 
   @ManyToOne(
     (type) => User,
-    (user) => user.messages,
+    (user) => user.messages
   )
   user: User;
 
@@ -35,7 +35,7 @@ class Message extends BaseEntity {
   createdAt: string;
 
   @UpdateDateColumn()
-  updated: string;
+  updatedAt: string;
 }
 
 export default Message;

@@ -4,7 +4,7 @@ const privateResolver = (resolverFunction) => async (
   context,
   info
 ) => {
-  if (!context.user) {
+  if (!context.req.user) {
     throw new Error('JWT 토큰이 없습니다');
   }
   const resolved = await resolverFunction(parent, args, context, info);

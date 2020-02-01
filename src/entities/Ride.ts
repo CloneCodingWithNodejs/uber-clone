@@ -5,7 +5,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  ManyToOne
 } from 'typeorm';
 import { rideStatus } from 'src/types/types';
 import User from './User';
@@ -17,7 +17,7 @@ class Ride extends BaseEntity {
 
   @Column({
     type: 'text',
-    enum: ['ACCEPTED', 'FINISHED', 'CANCELED', 'REQUESTING', 'ONROUTE'],
+    enum: ['ACCEPTED', 'FINISHED', 'CANCELED', 'REQUESTING', 'ONROUTE']
   })
   status: rideStatus;
 
@@ -50,13 +50,13 @@ class Ride extends BaseEntity {
 
   @ManyToOne(
     (type) => User,
-    (user) => user.ridesAsPassenger,
+    (user) => user.ridesAsPassenger
   )
   passenger: User;
 
   @ManyToOne(
     (type) => User,
-    (user) => user.ridesAsDriver,
+    (user) => user.ridesAsDriver
   )
   driver: User;
 
@@ -64,7 +64,7 @@ class Ride extends BaseEntity {
   createdAt: string;
 
   @UpdateDateColumn()
-  updated: string;
+  updatedAt: string;
 }
 
 export default Ride;

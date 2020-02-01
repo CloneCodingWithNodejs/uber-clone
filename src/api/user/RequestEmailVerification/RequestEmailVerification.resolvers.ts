@@ -10,7 +10,7 @@ const resolvers: Resolvers = {
     RequestEmailVerification: privateResolver(
       async (_, __, context): Promise<RequestEmailVerificationResponse> => {
         // eslint-disable-next-line prefer-destructuring
-        const user: User = context.user;
+        const user: User = context.req.user;
         if (user.email && !user.verifiedEmail) {
           const oldVerification = await Verification.findOne({
             payload: user.email

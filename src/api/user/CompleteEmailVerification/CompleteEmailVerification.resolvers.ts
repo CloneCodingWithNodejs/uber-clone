@@ -15,7 +15,7 @@ const resolvers: Resolvers = {
         args: CompleteEmailVerificationMutationArgs,
         context
       ): Promise<CompleteEmailVerificationResponse> => {
-        const user: User = context.user;
+        const user: User = context.req.user;
         const { key } = args;
         if (user.email) {
           try {

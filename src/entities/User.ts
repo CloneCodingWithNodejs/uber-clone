@@ -9,13 +9,14 @@ import {
   BeforeInsert,
   BeforeUpdate,
   ManyToOne,
-  OneToMany,
+  OneToMany
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { IsEmail } from 'class-validator';
 import Chat from './Chat';
 import Message from './Message';
 import Ride from './Ride';
+import Place from './Place';
 
 @Entity()
 class User extends BaseEntity {
@@ -59,7 +60,7 @@ class User extends BaseEntity {
   createdAt: string;
 
   @UpdateDateColumn()
-  updated: string;
+  updatedAt: string;
 
   @Column({ type: 'boolean', default: false })
   isDriving: boolean;
@@ -74,34 +75,40 @@ class User extends BaseEntity {
   lastLng: number;
 
   @Column({ type: 'double precision', default: 0 })
-  lasLat: number;
+  lastLat: number;
 
   @Column({ type: 'double precision', default: 0 })
   lastOrientation: number;
 
   @ManyToOne(
     (type) => Chat,
-    (chat) => chat.participants,
+    (chat) => chat.participants
   )
   chat: Chat;
 
   @OneToMany(
     (type) => Message,
-    (message) => message.user,
+    (message) => message.user
   )
   messages: Message[];
 
   @OneToMany(
     (type) => Ride,
-    (ride) => ride.passenger,
+    (ride) => ride.passenger
   )
   ridesAsPassenger: Ride[];
 
   @OneToMany(
     (type) => Ride,
-    (ride) => ride.driver,
+    (ride) => ride.driver
   )
   ridesAsDriver: Ride[];
+
+  @OneToMany(
+    (type) => Place,
+    (place) => place.user
+  )
+  places: Place[];
 
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
