@@ -8,7 +8,6 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
-  ManyToOne,
   OneToMany
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
@@ -80,11 +79,17 @@ class User extends BaseEntity {
   @Column({ type: 'double precision', default: 0 })
   lastOrientation: number;
 
-  @ManyToOne(
+  @OneToMany(
     (type) => Chat,
-    (chat) => chat.participants
+    (chat) => chat.passenger
   )
-  chat: Chat;
+  chatsAsPassenger: Chat[];
+
+  @OneToMany(
+    (type) => Chat,
+    (chat) => chat.driver
+  )
+  chatsAsDriver: Chat[];
 
   @OneToMany(
     (type) => Message,
