@@ -29,13 +29,17 @@ const resolvers: Resolvers = {
           verified: true
         });
         if (phoneVerfication) {
-          const newUser = await User.create({ ...args }).save();
+          const newUser = await User.create({
+            ...args,
+            verifiedPhoneNumber: true
+          }).save();
           if (newUser.email) {
             const emailVerification = await Verification.create({
               payload: newUser.email,
               target: 'EMAIL'
             }).save();
             // 인증메일을 보낸다
+
             sendVerificationEmail(
               newUser.email,
               newUser.fullName,

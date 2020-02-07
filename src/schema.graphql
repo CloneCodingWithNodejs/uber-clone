@@ -40,6 +40,7 @@ type Mutation {
   FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FaceBookConnectResponse!
   ReportMovement(lastOrientation: Float, lastLat: Float, lastLng: Float): ReportMovementResponse!
   RequestEmailVerification: RequestEmailVerificationResponse!
+  SignUp(firstName: String!, lastName: String!, email: String!, password: String, profilePhoto: String!, age: Int!, phoneNumber: String!, fbId: String): SignUpResponse!
   StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
   ToggleDrivingMode: ToggleDrivingModeResponse!
   UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
@@ -233,6 +234,12 @@ type User {
   places: [Place]
   chatsAsDriver: [Chat]
   chatsAsPassenger: [Chat]
+}
+
+type SignUpResponse {
+  ok: Boolean!
+  error: String
+  token: String
 }
 
 type StartPhoneVerificationResponse {

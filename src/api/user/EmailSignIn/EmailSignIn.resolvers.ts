@@ -24,6 +24,7 @@ const resolvers: Resolvers = {
         }
         // 비밀번호가 일치하는지 확인함
         const checkPassword = await user.comparePassword(password);
+        console.log(`결과 ${checkPassword}`);
         if (checkPassword) {
           const token = createJWT(user.id);
           return {

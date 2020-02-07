@@ -6,9 +6,9 @@ dotenv.config();
 const createJWT = (id: number): string => {
   const token = jwt.sign(
     {
-      id,
+      id
     },
-    process.env.JWT_SECRET || '',
+    process.env.JWT_SECRET || ''
   );
 
   return token;

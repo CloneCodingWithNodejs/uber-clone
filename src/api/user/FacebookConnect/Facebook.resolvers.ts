@@ -1,7 +1,8 @@
+/* eslint-disable no-unreachable */
 import { Resolvers } from '../../../types/resolvers';
 import {
   FacebookConnectMutationArgs,
-  FaceBookConnectResponse,
+  FaceBookConnectResponse
 } from '../../../types/graph';
 import User from '../../../entities/User';
 import createJWT from '../../../utils/createJWT';
@@ -10,7 +11,7 @@ const resolvers: Resolvers = {
   Mutation: {
     FacebookConnect: async (
       _,
-      args: FacebookConnectMutationArgs,
+      args: FacebookConnectMutationArgs
     ): Promise<FaceBookConnectResponse> => {
       const { fbId } = args;
       try {
@@ -21,14 +22,14 @@ const resolvers: Resolvers = {
           return {
             ok: true,
             error: null,
-            token,
+            token
           };
         }
       } catch (error) {
         return {
           ok: false,
           error: error.message,
-          token: null,
+          token: null
         };
       }
 
@@ -36,23 +37,23 @@ const resolvers: Resolvers = {
         // 없다면 새로운 유저를 생성
         const newUser = await User.create({
           ...args, // args에 있는 변수들을 전부 사용함
-          profilePhoto: `http://graph.facebook.com/${fbId}/picture?type=square`,
+          profilePhoto: `http://graph.facebook.com/${fbId}/picture?type=square`
         }).save();
         const token = createJWT(newUser.id);
         return {
           ok: true,
           error: null,
-          token,
+          token
         };
       } catch (error) {
         return {
           ok: false,
           error: error.message,
-          token: null,
+          token: null
         };
       }
-    },
-  },
+    }
+  }
 };
 
 export default resolvers;

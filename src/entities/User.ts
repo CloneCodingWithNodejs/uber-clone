@@ -7,7 +7,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
-  BeforeUpdate,
   OneToMany
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
@@ -126,9 +125,9 @@ class User extends BaseEntity {
   private hashPassword = (password: string) => {
     return bcrypt.hash(password, this.BCRYPT_ROUND);
   };
+  // @BeforeUpdate() 사용시 이슈있음
 
   @BeforeInsert()
-  @BeforeUpdate()
   savePassword = async () => {
     if (this.password) {
       const hashedPassword = await this.hashPassword(this.password);

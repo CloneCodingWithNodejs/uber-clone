@@ -38,6 +38,7 @@ class App {
   private jwtMiddleware = async (req, res, next): Promise<void> => {
     const token = req.get('X-JWT');
     if (token) {
+      // jwt토큰을 해석해서 User 객체를 받아옴
       const user = await decodeJWT(token);
       if (user) {
         req.user = user;

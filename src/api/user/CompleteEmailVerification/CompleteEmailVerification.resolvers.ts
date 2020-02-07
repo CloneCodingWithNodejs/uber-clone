@@ -26,13 +26,20 @@ const resolvers: Resolvers = {
             // 키와 이메일주소로 인증정보를 찾았는데 존재한다면
             // 유저의 이메일 인증을 유무를 참으로 바꾸고
             // 해당 인증의 인증 유무도 참으로 바꿈
-            if (verification) {
+            if (verification && !verification.verified) {
               user.verifiedEmail = true;
               user.save();
               verification.verified = true;
+              verification.save();
               return {
                 ok: true,
                 error: null
+              };
+            }
+            if (verification && verification.verified) {
+              return {
+                ok: false,
+                error: 'ALREADY_EXIST'
               };
             }
             return {
