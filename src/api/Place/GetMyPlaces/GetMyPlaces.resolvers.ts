@@ -1,7 +1,8 @@
+import { getRepository } from 'typeorm';
 import { Resolvers } from '../../../types/resolvers';
 import privateResolver from '../../../utils/privateResolver';
 import { GetMyPlacesResponse } from '../../../types/graph';
-import User from '../../../entities/User';
+import Place from '../../../entities/Place';
 
 const resolvers: Resolvers = {
   Query: {
@@ -9,14 +10,19 @@ const resolvers: Resolvers = {
       async (_, __, context): Promise<GetMyPlacesResponse> => {
         const {
           user: { id }
-        } = context;
+        } = context.req;
         try {
-          const user = await User.findOne({ id }, { relations: ['places'] });
-          if (user) {
+          // const user = await User.findOne({ id }, { relations: ['places'] });
+          const places = await getRepository(Place)
+            .createQueryBuilder('place')
+            .where('place.userId = :id', { id })
+            .orderBy('place.id', 'DESC')
+            .getMany();
+          if (places) {
             return {
               ok: true,
               error: null,
-              places: user.places
+              places
             };
           }
           return {

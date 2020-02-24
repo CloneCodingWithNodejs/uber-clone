@@ -22,6 +22,15 @@ const resolvers: Resolvers = {
             token: null
           };
         }
+
+        if (!user.verifiedEmail) {
+          return {
+            ok: false,
+            error: '이메일 인증을 먼저 받아주세요',
+            token: null
+          };
+        }
+
         // 비밀번호가 일치하는지 확인함
         const checkPassword = await user.comparePassword(password);
         console.log(`결과 ${checkPassword}`);
