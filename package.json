@@ -10,7 +10,8 @@
     "pretypes": "gql-merge --out-file ./src/schema.graphql ./src/api/**/*.graphql",
     "prebuild": "rm -rf dist",
     "build": "tsc",
-    "postbuild": "yarn copy src/api/**/*.graphql dist/api"
+    "postbuild": "copyfiles -u 2 src/api/**/*.graphql dist/api",
+    "start": "cd dist && node ."
   },
   "repository": {
     "type": "git",
