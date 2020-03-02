@@ -5,7 +5,7 @@ dotenv.config();
 
 const defaultConnectionOptions: ConnectionOptions = {
   type: 'postgres',
-  database: 'uber',
+  database: process.env.DB_NAME,
   synchronize: true,
   entities: ['entities/**/*.*'],
   host: process.env.DB_ENDPOINT,
