@@ -1,0 +1,12 @@
+type CompleteRideResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  CompleteRide(
+    driverId: Int!
+    passengerId: Int!
+    rideId: Int!
+  ): CompleteRideResponse!
+}

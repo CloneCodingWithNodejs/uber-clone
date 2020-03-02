@@ -35,6 +35,7 @@ type Mutation {
   UpdateRideStatus(rideId: Int!, status: StatusOption!): UpdateRideStatusResponse!
   CompleteEmailVerification(key: String!): CompleteEmailVerificationResponse!
   CompletePhoneVerification(phoneNumber: String!, key: String!): CompletePhoneVerificationResponse!
+  CompleteRide(driverId: Int!, passengerId: Int!, rideId: Int!): CompleteRideResponse!
   EmailSignIn(email: String!, password: String!): EmailSignInResponse!
   EmailSignUp(firstName: String!, lastName: String!, email: String!, password: String!, profilePhoto: String!, age: Int!, phoneNumber: String!): EmailSignUpResponse!
   FacebookConnect(firstName: String!, lastName: String!, email: String, fbId: String!): FaceBookConnectResponse!
@@ -43,6 +44,7 @@ type Mutation {
   SignUp(firstName: String!, lastName: String!, email: String!, password: String, profilePhoto: String!, age: Int!, phoneNumber: String!, fbId: String): SignUpResponse!
   StartPhoneVerification(phoneNumber: String!): StartPhoneVerificationResponse!
   ToggleDrivingMode: ToggleDrivingModeResponse!
+  UpdateIsRideStatus(userId: Int!): UpdateIsRideStatusResponse!
   UpdateMyProfile(firstName: String, lastName: String, email: String, password: String, profilePhoto: String, age: Int): UpdateMyProfileResponse!
 }
 
@@ -65,6 +67,7 @@ type Message {
   chat: Chat!
   chatId: Int
   user: User!
+  userId: Int
   createdAt: String!
   updatedAt: String
 }
@@ -135,7 +138,7 @@ type Ride {
   distance: String!
   createdAt: String!
   updatedAt: String
-  driver: User!
+  driver: User
   driverId: Int
   passenger: User!
   passengerId: Int!
@@ -146,6 +149,7 @@ type Ride {
 type UpdateRideStatusResponse {
   ok: Boolean!
   error: String
+  rideId: Int
 }
 
 enum StatusOption {
@@ -165,6 +169,11 @@ type CompletePhoneVerificationResponse {
   ok: Boolean!
   error: String
   token: String
+}
+
+type CompleteRideResponse {
+  ok: Boolean!
+  error: String
 }
 
 type EmailSignInResponse {
@@ -250,6 +259,12 @@ type StartPhoneVerificationResponse {
 type ToggleDrivingModeResponse {
   ok: Boolean!
   error: String
+}
+
+type UpdateIsRideStatusResponse {
+  ok: Boolean!
+  error: String
+  userId: Int
 }
 
 type UpdateMyProfileResponse {

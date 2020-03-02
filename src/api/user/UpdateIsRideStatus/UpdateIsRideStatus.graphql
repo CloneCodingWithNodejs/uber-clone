@@ -1,0 +1,9 @@
+type UpdateIsRideStatusResponse {
+  ok: Boolean!
+  error: String
+  userId: Int
+}
+
+type Mutation {
+  UpdateIsRideStatus(userId: Int!): UpdateIsRideStatusResponse!
+}

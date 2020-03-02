@@ -31,7 +31,7 @@ const resolvers: Resolvers = {
                   id: rideId,
                   status: 'REQUESTING'
                 },
-                { relations: ['passenger'] }
+                { relations: ['passenger', 'driver'] }
               );
               if (ride) {
                 ride.driver = user;
@@ -49,10 +49,13 @@ const resolvers: Resolvers = {
               }
               // 이미 매칭은 되어있고 완료나 취소같은 업데이트를 할때
             } else {
-              ride = await Ride.findOne({
-                id: rideId,
-                driver: user
-              });
+              ride = await Ride.findOne(
+                {
+                  id: rideId,
+                  driver: user
+                },
+                { relations: ['passenger', 'driver'] }
+              );
             }
 
             if (ride) {
@@ -61,24 +64,28 @@ const resolvers: Resolvers = {
               pubSub.publish('rideUpdate', { RideStatusSubscription: ride });
               return {
                 ok: true,
-                error: null
+                error: null,
+                rideId
               };
             }
             return {
               ok: false,
-              error: '해당하는 탈것 ID가 없습니다'
+              error: '해당하는 탈것 ID가 없습니다',
+              rideId: null
             };
           } catch (error) {
             return {
               ok: false,
-              error: error.message
+              error: error.message,
+              rideId: null
             };
           }
         }
 
         return {
           ok: false,
-          error: '현재 회원님은 운전중이 아닙니다'
+          error: '현재 회원님은 운전중이 아닙니다',
+          rideId: null
         };
       }
     )

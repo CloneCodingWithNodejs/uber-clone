@@ -26,7 +26,7 @@ const appOptions: Options = {
           currentUser: user
         };
       }
-      throw new Error('JWT TOKEN이 존재하지않음 index.ts');
+      return null;
     }
   }
 };
