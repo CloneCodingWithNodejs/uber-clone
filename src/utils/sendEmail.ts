@@ -19,8 +19,8 @@ const sendEmail = (to: string, subject: string, html: string) => {
 };
 
 const sendVerificationEmail = (to: string, fullname: string, key: string) => {
-  const emailSubject = `안녕하세요! ${fullname}님 이메일을 인증해주세요`;
-  const emailBody = `클릭해서 인증하세요 <a href="http://localhost:3000/verify-email/${key}/">클릭</a>`;
+  const emailSubject = `안녕하세요! ${fullname}님 이메일을 인증해주세요, 감사합니다!!`;
+  const emailBody = `클릭해서 인증하세요 <a href="https://uber-cloneclient.herokuapp.com/${key}/">https://uber-cloneclient.herokuapp.com/${key}/</a>`;
   return sendEmail(to, emailSubject, emailBody);
 };
 
