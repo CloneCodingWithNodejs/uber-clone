@@ -67,6 +67,6 @@
     "pg": "^7.17.1",
     "tslint-config-prettier": "^1.18.0",
     "twilio": "^3.39.3",
-    "typeorm": "^0.2.22"
+    "typeorm": "^0.2.25"
   }
 }
